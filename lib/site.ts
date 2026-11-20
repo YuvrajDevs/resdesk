@@ -29,7 +29,9 @@ export type Property = {
   location: string;
   status: "For Sale" | "For Rent";
   price: string;
-  specs: string[];
+  beds: string;
+  area: string;
+  feature: string;
   image: string;
 };
 
@@ -39,7 +41,9 @@ export const properties: Property[] = [
     location: "Prime Residential Enclave",
     status: "For Sale",
     price: "₹ 3.2 Cr",
-    specs: ["4 BHK", "3,200 sq ft", "Private pool"],
+    beds: "4 BHK",
+    area: "3,200 sq ft",
+    feature: "Private pool",
     image: "/images/villa.jpg",
   },
   {
@@ -47,7 +51,9 @@ export const properties: Property[] = [
     location: "City Centre",
     status: "For Sale",
     price: "₹ 1.45 Cr",
-    specs: ["3 BHK", "1,750 sq ft", "Club access"],
+    beds: "3 BHK",
+    area: "1,750 sq ft",
+    feature: "Club access",
     image: "/images/tower.jpg",
   },
   {
@@ -55,7 +61,9 @@ export const properties: Property[] = [
     location: "Business District",
     status: "For Rent",
     price: "₹ 55,000/mo",
-    specs: ["2 BHK", "1,100 sq ft", "Furnished"],
+    beds: "2 BHK",
+    area: "1,100 sq ft",
+    feature: "Furnished",
     image: "/images/loft.jpg",
   },
 ];

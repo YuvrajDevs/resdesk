@@ -1,260 +1,255 @@
 import Image from "next/image";
+import Dock from "@/components/Dock";
 import EnquiryForm from "@/components/EnquiryForm";
 import Reveal from "@/components/Reveal";
-import { Arrow, Check, Mail, Phone, Pin, Plus, WhatsApp } from "@/components/Icons";
+import {
+  Area, ArrowRight, ArrowUpRight, Bed, Chart, Check, Home as HomeIcon, Key, Mail, Phone, Pin, Plus, Sparkle, Star, Tag, WhatsApp,
+} from "@/components/Icons";
 import { faqs, mail, properties, services, site, stats, steps, tel, wa } from "@/lib/site";
 
-export default function Home() {
+const serviceIcons = [HomeIcon, Tag, Key, Chart];
+
+function Brand() {
+  return (
+    <a href="#top" className="brand" aria-label={`${site.brand} — back to top`}>
+      <span className="brand-mark" aria-hidden>
+        R
+      </span>
+      <span className="brand-word">
+        Residential<span>Desk</span>
+      </span>
+    </a>
+  );
+}
+
+export default function Page() {
   return (
     <>
       <Reveal />
 
-      {/* ---------- NAV ---------- */}
-      <header className="nav">
-        <div className="nav-inner">
-          <a href="#top" className="brand" aria-label={`${site.brand} home`}>
-            <span className="brand-mark">R</span>
-            <span>
-              Residential<em>Desk</em>
-            </span>
-          </a>
-          <nav className="nav-links" aria-label="Primary">
+      {/* ───────── Header ───────── */}
+      <header className="header">
+        <div className="container header-inner">
+          <Brand />
+          <nav className="header-nav" aria-label="Primary">
             <a href="#about">About</a>
             <a href="#properties">Properties</a>
             <a href="#services">Services</a>
             <a href="#faq">FAQ</a>
           </nav>
-          <a href={tel} className="btn btn-dark btn-sm">
-            <Phone size={15} /> <span>Call Vivek</span>
+          <a href={tel} className="btn btn-primary btn-sm">
+            <Phone size={16} />
+            <span>Call</span>
           </a>
         </div>
       </header>
 
       <main id="top">
-        {/* ---------- HERO ---------- */}
-        <section className="hero wrap">
-          <div className="hero-card">
+        {/* ───────── Hero ───────── */}
+        <section className="hero container" aria-labelledby="hero-title">
+          <div className="hero-copy">
+            <p className="status">
+              <span className="status-dot" aria-hidden /> Taking new clients
+            </p>
+            <h1 id="hero-title" className="display">
+              Find a home that <em>feels&nbsp;right.</em>
+            </h1>
+            <p className="lead">
+              I’m {site.name} — a {site.role.toLowerCase()} helping families buy, sell and rent with honest advice and
+              zero pressure.
+            </p>
+            <div className="hero-actions">
+              <a href={tel} className="btn btn-primary btn-lg">
+                <Phone /> Call {site.name}
+              </a>
+              <a href={wa()} target="_blank" rel="noopener" className="btn btn-whatsapp btn-lg">
+                <WhatsApp /> WhatsApp
+              </a>
+            </div>
+            <a href={mail} className="hero-mail">
+              <Mail size={16} /> {site.email}
+            </a>
+          </div>
+
+          <div className="hero-visual">
             <Image
               src="/images/hero.jpg"
               alt="Contemporary family home at dusk"
               fill
               priority
-              sizes="(min-width: 1200px) 1200px, 100vw"
-              className="hero-img"
+              sizes="(min-width: 1024px) 560px, 100vw"
             />
-            <div className="hero-shade" />
-            <div className="hero-top">
-              <span className="glass-chip">
-                <span className="dot" /> Available for consultations
-              </span>
-            </div>
-            <div className="hero-content">
-              <p className="kicker kicker-light">
-                {site.name} · {site.role}
-              </p>
-              <h1>
-                Find a home
-                <br />
-                <em>that feels right.</em>
-              </h1>
-              <p className="hero-lead">
-                Curated properties, honest advice and a direct line to {site.name} — from the first viewing to the
-                final keys.
-              </p>
-              <div className="hero-ctas">
-                <a href={tel} className="btn btn-light">
-                  <Phone /> Call now
-                </a>
-                <a href={wa()} target="_blank" rel="noopener" className="btn btn-wa">
-                  <WhatsApp /> WhatsApp
-                </a>
-              </div>
-            </div>
+            <dl className="hero-stats">
+              {stats.map((st) => (
+                <div key={st.label}>
+                  <dd>{st.value}</dd>
+                  <dt>{st.label}</dt>
+                </div>
+              ))}
+            </dl>
           </div>
-
-          <dl className="stats" data-reveal>
-            {stats.map((s) => (
-              <div key={s.label}>
-                <dt>{s.label}</dt>
-                <dd>{s.value}</dd>
-              </div>
-            ))}
-          </dl>
         </section>
 
-        {/* ---------- ABOUT ---------- */}
-        <section id="about" className="section wrap">
-          <div className="bento">
-            <figure className="bento-photo" data-reveal>
-              <Image
-                src="/images/vivek.jpg"
-                alt={`Portrait of ${site.name}`}
-                fill
-                sizes="(min-width: 900px) 420px, 100vw"
-              />
-              <figcaption className="name-tag">
-                <strong>{site.name}</strong>
-                <span>Founder, {site.brand}</span>
-              </figcaption>
-            </figure>
+        {/* ───────── About ───────── */}
+        <section id="about" className="section container about" aria-labelledby="about-title">
+          <figure className="about-photo" data-reveal>
+            <Image src="/images/vivek.jpg" alt={`Portrait of ${site.name}`} fill sizes="(min-width: 1024px) 480px, 100vw" />
+            <figcaption className="about-tag">
+              <span className="about-tag-name">{site.name}</span>
+              <span className="about-tag-role">Founder, {site.brand}</span>
+            </figcaption>
+          </figure>
 
-            <div className="bento-text" data-reveal>
-              <p className="kicker">About</p>
-              <h2>
-                One consultant.
-                <br />
-                <em>Your interests first.</em>
-              </h2>
-              <p>
-                {site.brand} is built on a simple idea: finding a home should feel clear and calm. I work with a small
-                number of clients at a time, so every enquiry gets my full attention — no pressure, no jargon.
-              </p>
-              <ul className="ticks">
-                <li>
-                  <Check size={14} /> Verified listings &amp; clean paperwork
-                </li>
-                <li>
-                  <Check size={14} /> Transparent, fair pricing guidance
-                </li>
-                <li>
-                  <Check size={14} /> With you from shortlist to handover
-                </li>
-              </ul>
-            </div>
-
-            <a href={wa()} target="_blank" rel="noopener" className="bento-cta" data-reveal>
-              <span className="kicker kicker-light">Quick question?</span>
-              <span className="bento-cta-title">Message Vivek on WhatsApp</span>
-              <span className="round-arrow">
-                <Arrow />
-              </span>
+          <div className="about-copy" data-reveal>
+            <p className="eyebrow">About</p>
+            <h2 id="about-title" className="h2">
+              One consultant. <em>Your interests first.</em>
+            </h2>
+            <p className="body-lg">
+              {site.brand} is built on a simple idea — finding a home should feel clear and calm. I work with a small
+              number of clients at a time, so you always get my full attention.
+            </p>
+            <ul className="checklist">
+              <li><Check size={16} /> Verified listings and clean paperwork</li>
+              <li><Check size={16} /> Transparent, fair pricing guidance</li>
+              <li><Check size={16} /> With you from shortlist to handover</li>
+            </ul>
+            <a href={wa()} target="_blank" rel="noopener" className="text-link">
+              Ask me anything on WhatsApp <ArrowRight size={18} />
             </a>
           </div>
         </section>
 
-        {/* ---------- PROPERTIES ---------- */}
-        <section id="properties" className="section">
-          <div className="wrap section-head" data-reveal>
+        {/* ───────── Properties ───────── */}
+        <section id="properties" className="section" aria-labelledby="props-title">
+          <div className="container section-head" data-reveal>
             <div>
-              <p className="kicker">Featured</p>
-              <h2>
+              <p className="eyebrow">Featured</p>
+              <h2 id="props-title" className="h2">
                 Handpicked <em>homes</em>
               </h2>
             </div>
-            <p className="muted">A few current favourites. Many more off-market — just ask.</p>
+            <p className="section-sub">A few current favourites. Many more available privately — just ask.</p>
           </div>
 
-          <div className="rail" role="list">
+          <ul className="rail">
             {properties.map((p) => (
-              <article key={p.title} className="prop" role="listitem" data-reveal>
-                <div className="prop-media">
-                  <Image src={p.image} alt={p.title} fill sizes="(min-width: 900px) 380px, 82vw" />
-                  <span className={`badge ${p.status === "For Rent" ? "badge-alt" : ""}`}>{p.status}</span>
+              <li key={p.title} className="card" data-reveal>
+                <div className="card-media">
+                  <Image src={p.image} alt={p.title} fill sizes="(min-width: 1024px) 380px, 80vw" />
+                  <span className={`pill ${p.status === "For Rent" ? "pill-rent" : ""}`}>{p.status}</span>
                 </div>
-                <div className="prop-body">
-                  <div className="prop-row">
-                    <div>
-                      <h3>{p.title}</h3>
-                      <p className="prop-loc">
-                        <Pin size={13} /> {p.location}
-                      </p>
-                    </div>
-                    <p className="prop-price">{p.price}</p>
-                  </div>
-                  <ul className="specs">
-                    {p.specs.map((s) => (
-                      <li key={s}>{s}</li>
-                    ))}
+                <div className="card-body">
+                  <h3 className="card-title">{p.title}</h3>
+                  <p className="card-loc">
+                    <Pin size={15} /> {p.location}
+                  </p>
+                  <ul className="card-specs">
+                    <li><Bed size={16} /> {p.beds}</li>
+                    <li><Area size={16} /> {p.area}</li>
+                    <li><Sparkle size={16} /> {p.feature}</li>
                   </ul>
-                  <a
-                    className="btn btn-outline btn-block"
-                    href={wa(`Hi Vivek, I'm interested in ${p.title} (${p.location}). Could you share more details?`)}
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    Enquire about this home <Arrow size={16} />
-                  </a>
+                  <div className="card-foot">
+                    <p className="card-price">{p.price}</p>
+                    <a
+                      href={wa(`Hi ${site.name}, I'm interested in ${p.title} (${p.location}). Could you share more details?`)}
+                      target="_blank"
+                      rel="noopener"
+                      className="btn btn-secondary btn-sm"
+                      aria-label={`Enquire about ${p.title}`}
+                    >
+                      Enquire <ArrowUpRight size={16} />
+                    </a>
+                  </div>
                 </div>
-              </article>
+              </li>
             ))}
-          </div>
-          <p className="wrap fine">Sample listings — details, photos and prices are placeholders.</p>
+          </ul>
+          <p className="container footnote">Sample listings — photos, details and prices are placeholders.</p>
         </section>
 
-        {/* ---------- SERVICES ---------- */}
-        <section id="services" className="section section-dark">
-          <div className="wrap">
+        {/* ───────── Services ───────── */}
+        <section id="services" className="section container" aria-labelledby="svc-title">
+          <div className="section-head" data-reveal>
+            <div>
+              <p className="eyebrow">Services</p>
+              <h2 id="svc-title" className="h2">
+                How I can <em>help</em>
+              </h2>
+            </div>
+            <p className="section-sub">Whether it’s your first home or your fifth investment.</p>
+          </div>
+          <ul className="services">
+            {services.map((sv, i) => {
+              const Icon = serviceIcons[i % serviceIcons.length];
+              return (
+                <li key={sv.title} className="service" data-reveal>
+                  <span className="icon-tile"><Icon size={22} /></span>
+                  <h3 className="h3">{sv.title}</h3>
+                  <p>{sv.text}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+
+        {/* ───────── Process ───────── */}
+        <section className="section section-tint" aria-labelledby="process-title">
+          <div className="container">
             <div className="section-head" data-reveal>
               <div>
-                <p className="kicker kicker-light">Services</p>
-                <h2>
-                  How I can <em>help</em>
+                <p className="eyebrow">How it works</p>
+                <h2 id="process-title" className="h2">
+                  Simple, from <em>day one</em>
                 </h2>
               </div>
-              <p className="muted-light">Whether you’re buying your first home or growing a portfolio.</p>
             </div>
-            <ol className="svc-list">
-              {services.map((s, i) => (
-                <li key={s.title} data-reveal>
-                  <span className="svc-n">0{i + 1}</span>
-                  <h3>{s.title}</h3>
-                  <p>{s.text}</p>
+            <ol className="steps">
+              {steps.map((st, i) => (
+                <li key={st.title} className="step" data-reveal>
+                  <span className="step-num">{String(i + 1).padStart(2, "0")}</span>
+                  <h3 className="h3">{st.title}</h3>
+                  <p>{st.text}</p>
                 </li>
               ))}
             </ol>
           </div>
         </section>
 
-        {/* ---------- PROCESS ---------- */}
-        <section className="section wrap">
-          <div className="section-head" data-reveal>
-            <div>
-              <p className="kicker">Process</p>
-              <h2>
-                Simple, from <em>day one</em>
-              </h2>
+        {/* ───────── Testimonial ───────── */}
+        <section className="section container" aria-label="Client testimonial">
+          <figure className="testimonial" data-reveal>
+            <div className="stars" aria-label="5 out of 5 stars">
+              {Array.from({ length: 5 }).map((_, i) => <Star key={i} />)}
             </div>
-          </div>
-          <ol className="steps">
-            {steps.map((s, i) => (
-              <li key={s.title} data-reveal>
-                <span className="step-n">{i + 1}</span>
-                <h3>{s.title}</h3>
-                <p>{s.text}</p>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        {/* ---------- TESTIMONIAL ---------- */}
-        <section className="section wrap">
-          <figure className="quote" data-reveal>
             <blockquote>
-              “Clear, patient and always reachable. Vivek made one of our biggest decisions feel easy.”
+              “Clear, patient and always reachable. {site.name} made one of our biggest decisions feel easy.”
             </blockquote>
             <figcaption>
-              A happy homeowner <span>· sample testimonial</span>
+              <span className="avatar" aria-hidden>A</span>
+              <span>
+                <strong>A happy homeowner</strong>
+                <small>Sample testimonial</small>
+              </span>
             </figcaption>
           </figure>
         </section>
 
-        {/* ---------- FAQ ---------- */}
-        <section id="faq" className="section wrap faq-wrap">
-          <div data-reveal>
-            <p className="kicker">FAQ</p>
-            <h2>
-              Good <em>questions</em>
+        {/* ───────── FAQ ───────── */}
+        <section id="faq" className="section container faq-layout" aria-labelledby="faq-title">
+          <div className="faq-intro" data-reveal>
+            <p className="eyebrow">FAQ</p>
+            <h2 id="faq-title" className="h2">
+              Common <em>questions</em>
             </h2>
-            <p className="muted">Anything else? Vivek is a message away.</p>
+            <p className="section-sub">Can’t find what you need? I’m one message away.</p>
           </div>
-          <div className="faq">
+          <div className="faq" data-reveal>
             {faqs.map((f) => (
-              <details key={f.q} data-reveal>
+              <details key={f.q}>
                 <summary>
-                  {f.q}
-                  <span className="faq-icon">
-                    <Plus size={16} />
-                  </span>
+                  <span>{f.q}</span>
+                  <span className="faq-toggle" aria-hidden><Plus size={18} /></span>
                 </summary>
                 <p>{f.a}</p>
               </details>
@@ -262,77 +257,58 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ---------- CONTACT ---------- */}
-        <section id="contact" className="section wrap">
-          <div className="contact" data-reveal>
-            <div className="contact-intro">
-              <p className="kicker kicker-light">Let’s talk</p>
-              <h2>
-                Ready when <em>you</em> are.
+        {/* ───────── Contact ───────── */}
+        <section id="contact" className="section container" aria-labelledby="contact-title">
+          <div className="contact">
+            <div className="contact-copy" data-reveal>
+              <p className="eyebrow eyebrow-inverse">Get in touch</p>
+              <h2 id="contact-title" className="h2">
+                Let’s find your <em>next home.</em>
               </h2>
-              <p className="muted-light">Call, WhatsApp or email — Vivek usually replies the same day.</p>
+              <p className="contact-sub">Call, WhatsApp or email — I usually reply the same day.</p>
 
-              <div className="contact-actions">
-                <a href={tel} className="action">
-                  <span className="action-ico">
-                    <Phone />
-                  </span>
-                  <span>
-                    <small>Call</small>
-                    {site.phoneDisplay}
-                  </span>
-                  <Arrow size={16} />
+              <div className="contact-list">
+                <a href={tel} className="contact-item">
+                  <span className="contact-icon"><Phone /></span>
+                  <span className="contact-text"><small>Call</small>{site.phoneDisplay}</span>
+                  <ArrowUpRight size={18} className="contact-arrow" />
                 </a>
-                <a href={wa()} target="_blank" rel="noopener" className="action">
-                  <span className="action-ico action-ico-wa">
-                    <WhatsApp />
-                  </span>
-                  <span>
-                    <small>WhatsApp</small>Chat with Vivek
-                  </span>
-                  <Arrow size={16} />
+                <a href={wa()} target="_blank" rel="noopener" className="contact-item">
+                  <span className="contact-icon contact-icon-wa"><WhatsApp /></span>
+                  <span className="contact-text"><small>WhatsApp</small>Message {site.name}</span>
+                  <ArrowUpRight size={18} className="contact-arrow" />
                 </a>
-                <a href={mail} className="action">
-                  <span className="action-ico">
-                    <Mail />
-                  </span>
-                  <span>
-                    <small>Email</small>
-                    {site.email}
-                  </span>
-                  <Arrow size={16} />
+                <a href={mail} className="contact-item">
+                  <span className="contact-icon"><Mail /></span>
+                  <span className="contact-text"><small>Email</small>{site.email}</span>
+                  <ArrowUpRight size={18} className="contact-arrow" />
                 </a>
               </div>
             </div>
-            <EnquiryForm />
+            <div data-reveal>
+              <EnquiryForm />
+            </div>
           </div>
         </section>
       </main>
 
-      <footer className="footer wrap">
-        <a href="#top" className="brand">
-          <span className="brand-mark">R</span>
-          <span>
-            Residential<em>Desk</em>
-          </span>
-        </a>
-        <p>
-          Real estate consulting by {site.name} · © {new Date().getFullYear()}
-        </p>
+      {/* ───────── Footer ───────── */}
+      <footer className="footer">
+        <div className="container footer-inner">
+          <Brand />
+          <nav className="footer-nav" aria-label="Footer">
+            <a href="#about">About</a>
+            <a href="#properties">Properties</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <p className="footer-copy">
+            © {new Date().getFullYear()} {site.brand} · Real estate consulting by {site.name}
+          </p>
+        </div>
       </footer>
 
-      {/* ---------- MOBILE CONTACT DOCK ---------- */}
-      <nav className="dock" aria-label="Quick contact">
-        <a href={tel} className="dock-call">
-          <Phone size={17} /> Call
-        </a>
-        <a href={wa()} target="_blank" rel="noopener" className="dock-wa">
-          <WhatsApp size={17} /> WhatsApp
-        </a>
-        <a href={mail} aria-label="Email Vivek" className="dock-mail">
-          <Mail size={18} />
-        </a>
-      </nav>
+      <Dock />
     </>
   );
 }
